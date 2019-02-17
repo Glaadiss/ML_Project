@@ -1,12 +1,11 @@
-# exercise 2.1.1
 import numpy as np
 import xlrd
 
 # Load xls sheet with data
-doc = xlrd.open_workbook('/Users/bartlomiejgladys/Desktop/BlackFriday2.xlsx').sheet_by_index(0)
+doc = xlrd.open_workbook('./BlackFridayShort.xlsx').sheet_by_index(0)
 
 colsCount = 12
-rowsCount = 92
+rowsCount = 500
 startingFromRow = 2
 memSize = rowsCount - startingFromRow 
 attributeNames = doc.row_values(1,0, colsCount)
@@ -19,7 +18,7 @@ ageY = np.asarray([ageDict[value] for value in ageLabels])
 
 genderLabels = doc.col_values(2, startingFromRow, rowsCount)
 genderNames = sorted(set(genderLabels))
-genderDict = dict(zip(genderNames, range(2)))
+genderDict = dict(zip(genderNames, range(2)))   
 genderY = np.asarray([genderDict[value] for value in genderLabels])
 
 cityLabels = doc.col_values(5, startingFromRow, rowsCount)
@@ -52,10 +51,9 @@ for i, col_id in enumerate(range(8, 11)):
 X[:, 11] = np.asarray(doc.col_values(11, startingFromRow, rowsCount))
 
 
+N = len(ageY)
+M = len(ageNames)
+C = len(ageLabels)
 
-# Compute values of N, M and C.
-#N = len(y)
-#M = len(attributeNames)
-#C = len(classNames)
 
-print('Ran Exercise 2.1.1')
+
