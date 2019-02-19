@@ -11,7 +11,7 @@ import xlrd
 
 
 #import the excel sheet
-doc = xlrd.open_workbook(r'C:\Users\danie\Dropbox\3 semester\Intro to Machine learning 02450\02450Toolbox_Python\Data\BlackFriday2.xlsx').sheet_by_index(0)
+doc = xlrd.open_workbook('./BlackFriday2.xlsx').sheet_by_index(0)
 #BlackFriday = pd.read_excel(r'C:\Users\danie\Dropbox\3 semester\Intro to Machine learning 02450\02450Toolbox_Python\Data\BlackFriday2.xlsx', sheet_name = 0)
 
 colsCount = 12
