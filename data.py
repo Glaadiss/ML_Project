@@ -2,7 +2,7 @@ import numpy as np
 import xlrd
 import pandas as pd
 # Load xls sheet with data
-doc = xlrd.open_workbook('./BlackFridayShort.xlsx').sheet_by_index(0)
+doc = xlrd.open_workbook('./BlackFridayRandom.xlsx').sheet_by_index(0)
 
 def getValue(val): 
     return 60 if '55+' == val else np.asarray(val.split('-'), dtype=int).mean()
