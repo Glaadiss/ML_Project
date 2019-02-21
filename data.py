@@ -54,7 +54,7 @@ X[:, 9] = stayInY
 X[:, 10] = doc.col_values(7, startingFromRow, rowsCount)
 for i, col_id in enumerate(range(11, 14)):
     tempData = doc.col_values(col_id - 3, startingFromRow, rowsCount)
-    X[:, col_id] = np.asarray([0 if '' == value else value for value in tempData])
+    X[:, col_id] = np.asarray([0 if '' == value else int(float(value)) for value in tempData])
 X[:, 14] = np.asarray(doc.col_values(11, startingFromRow, rowsCount))
 
 
