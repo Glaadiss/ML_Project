@@ -58,6 +58,8 @@ for i, col_id in enumerate(range(11, 14)):
 X[:, 14] = np.asarray(doc.col_values(11, startingFromRow, rowsCount))
 
 
+
+
 colsCount2 = 7
 X2 = np.empty((memSize, colsCount2), dtype=int)
 X2[:, 0] = genderY
@@ -75,6 +77,9 @@ print(X)
 N = len(ageY)
 M = len(ageNames)
 C = len(ageLabels)
+
+
+mat = df.corr()
 
 
 
