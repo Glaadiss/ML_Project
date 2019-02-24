@@ -41,23 +41,28 @@ stayInY = np.asarray([5 if '4+' == value else value for value in stayInLabels])
 
 X = np.empty((memSize, colsCount), dtype=int)
 zeros = np.zeros(memSize)
-X[:, 0] = doc.col_values(0, startingFromRow, rowsCount)
-X[:, 1] = zeros
-X[:, 2] = [1 if value == 0 else 0 for value in genderY]
-X[:, 3] = [1 if value == 1 else 0 for value in genderY]
-X[:, 4] = ageY
-X[:, 5] = doc.col_values(4, startingFromRow, rowsCount)
-X[:, 6] = [1 if value == 0 else 0 for value in cityY]
-X[:, 7] = [1 if value == 1 else 0 for value in cityY]
-X[:, 8] = [1 if value == 2 else 0 for value in cityY]
-X[:, 9] = stayInY
-X[:, 10] = doc.col_values(7, startingFromRow, rowsCount)
+X[:, 0] = doc.col_values(0, startingFromRow, rowsCount) #userId
+X[:, 1] = zeros # productId
+X[:, 2] = [1 if value == 0 else 0 for value in genderY] # isMale
+X[:, 3] = [1 if value == 1 else 0 for value in genderY] # isFemale
+X[:, 4] = ageY # age avg 
+X[:, 5] = doc.col_values(4, startingFromRow, rowsCount) # occupation
+X[:, 6] = [1 if value == 0 else 0 for value in cityY]  # city A
+X[:, 7] = [1 if value == 1 else 0 for value in cityY]  # city B  
+X[:, 8] = [1 if value == 2 else 0 for value in cityY]  # city C
+X[:, 9] = stayInY # stay in city integer
+X[:, 10] = doc.col_values(7, startingFromRow, rowsCount) # martial status
+# product categories 
 for i, col_id in enumerate(range(11, 14)):
     tempData = doc.col_values(col_id - 3, startingFromRow, rowsCount)
     X[:, col_id] = np.asarray([0 if '' == value else int(float(value)) for value in tempData])
+# purchase    
 X[:, 14] = np.asarray(doc.col_values(11, startingFromRow, rowsCount))
 
+X3 = X[:, [4,9,14]]
 
+ratioDf = pd.DataFrame(X3)
+ratioDf.columns = ['age', 'stayInCityYear', 'purchase']
 
 
 colsCount2 = 7
@@ -78,8 +83,12 @@ N = len(ageY)
 M = len(ageNames)
 C = len(ageLabels)
 
+# isMale, isFemale, avgAge, cityA, cityB, cityC, stayInY, martialSstatus, purchase 
+XforPCA = X[:, [2, 3, 4, 6, 7, 8, 9, 10, 14]]
 
-mat = df.corr()
+smallPca = X[:, [4,8,14]]
+
+mat = ratioDf.corr()
 
 
 
