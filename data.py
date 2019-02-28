@@ -1,5 +1,6 @@
 import numpy as np
 import xlrd
+from math import sqrt
 import pandas as pd
 # Load xls sheet with data
 doc = xlrd.open_workbook('./BlackFridayRandom.xlsx').sheet_by_index(0)
@@ -39,17 +40,21 @@ stayInY = np.asarray([5 if '4+' == value else value for value in stayInLabels])
 # Preallocate memory, then extract excel data to matrix X
 
 
-X = np.empty((memSize, colsCount), dtype=int)
+k3 = round(1/sqrt(3), 3)
+k2 = round(1/sqrt(2), 3)
+k20 = round(1/sqrt(20), 3)
+
+X = np.empty((memSize, colsCount), dtype=float)
 zeros = np.zeros(memSize)
 X[:, 0] = doc.col_values(0, startingFromRow, rowsCount) #userId
 X[:, 1] = zeros # productId
-X[:, 2] = [1 if value == 0 else 0 for value in genderY] # isMale
-X[:, 3] = [1 if value == 1 else 0 for value in genderY] # isFemale
+X[:, 2] = [k2 if value == 0 else 0 for value in genderY] # isMale
+X[:, 3] = [k2 if value == 1 else 0 for value in genderY] # isFemale
 X[:, 4] = ageY # age avg 
 X[:, 5] = doc.col_values(4, startingFromRow, rowsCount) # occupation
-X[:, 6] = [1 if value == 0 else 0 for value in cityY]  # city A
-X[:, 7] = [1 if value == 1 else 0 for value in cityY]  # city B  
-X[:, 8] = [1 if value == 2 else 0 for value in cityY]  # city C
+X[:, 6] = [k3 if value == 0 else 0 for value in cityY]  # city A
+X[:, 7] = [k3 if value == 1 else 0 for value in cityY]  # city B  
+X[:, 8] = [k3 if value == 2 else 0 for value in cityY]  # city C
 X[:, 9] = stayInY # stay in city integer
 X[:, 10] = doc.col_values(7, startingFromRow, rowsCount) # martial status
 # product categories 
@@ -83,11 +88,14 @@ N = len(ageY)
 M = len(ageNames)
 C = len(ageLabels)
 
+
 # isMale, isFemale, avgAge, cityA, cityB, cityC, stayInY, martialSstatus, purchase 
 XforPCA = X[:, [2, 3, 4, 6, 7, 8, 9, 10, 14]]
 
-smallPca = X[:, [4,8,14]]
+# avgAge, stayInY, Purchase, isMale, isFemale, martialStatus
+smallPca = X[:, [4, 9, 2, 3, 10, 14]]
 
+pcaNames = ['avgAge', 'stayInY',  'isMale', 'isFemale', 'martialStatus','Purchase' ]
 mat = ratioDf.corr()
 
 
