@@ -36,12 +36,12 @@ j = 1
 
 # Plot PCA of the data
 f = figure()
-title('NanoNose data: PCA')
+title('PCA ')
 #Z = array(Z)
 for c in range(3):
     # select indices belonging to class c:
     class_mask = cityY==c
-    plot(Z[class_mask,i], Z[class_mask,j], 'o', alpha=.5)
+    plot(Z[class_mask,i], Z[class_mask,j], 'o', alpha=.3)
 legend(cityNames)
 xlabel('PC{0}'.format(i+1))
 ylabel('PC{0}'.format(j+1))

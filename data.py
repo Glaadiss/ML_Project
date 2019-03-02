@@ -92,7 +92,7 @@ C = len(ageLabels)
 # isMale, isFemale, avgAge, cityA, cityB, cityC, stayInY, martialSstatus, purchase 
 XforPCA = X[:, [2, 3, 4, 6, 7, 8, 9, 10, 14]]
 
-# avgAge, stayInY, Purchase, isMale, isFemale, martialStatus
+# avgAge, stayInY, isMale, isFemale, martialStatus, Purchase
 smallPca = X[:, [4, 9, 2, 3, 10, 14]]
 
 pcaNames = ['avgAge', 'stayInY',  'isMale', 'isFemale', 'martialStatus','Purchase' ]
