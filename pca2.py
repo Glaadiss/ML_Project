@@ -8,7 +8,7 @@ Created on Sun Feb 24 11:10:59 2019
 
 
 from data import *
-from matplotlib.pyplot import figure, plot, title, xlabel, ylabel, show, legend
+from matplotlib.pyplot import figure, plot, title, xlabel, ylabel, show, legend, subplots
 from scipy.linalg import svd
 
 # Subtract mean value from data
@@ -34,6 +34,14 @@ Z = Y @ (V.T)
 i = 0
 j = 1
 
+
+fig, ax = subplots()
+N = len(Z)
+
+
+ax.grid(color='white', linestyle='solid')
+
+
 # Plot PCA of the data
 f = figure()
 title('PCA ')
@@ -42,11 +50,12 @@ for c in range(3):
     # select indices belonging to class c:
     class_mask = cityY==c
     plot(Z[class_mask,i], Z[class_mask,j], 'o', alpha=.3)
+    
 legend(cityNames)
 xlabel('PC{0}'.format(i+1))
 ylabel('PC{0}'.format(j+1))
 
 # Output result to screen
-show()
+
 
 print('Ran Exercise 2.1.4')

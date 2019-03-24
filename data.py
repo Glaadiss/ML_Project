@@ -70,6 +70,18 @@ ratioDf = pd.DataFrame(X3)
 ratioDf.columns = ['age', 'stayInCityYear', 'purchase']
 
 
+Occupation = np.zeros((len(X), 19))
+Category_1 = np.zeros((len(X), 19))
+Category_2 = np.zeros((len(X), 19))
+Category_3 = np.zeros((len(X), 19))
+
+for x in range(0, 19):
+   Occupation[:, x] = [k20 if value == x else 0 for value in X[:, 5]]
+   Category_1[:, x] = [k20 if value == x else 0 for value in X[:, 11]]
+   Category_2[:, x] = [k20 if value == x else 0 for value in X[:, 12]]
+   Category_3[:, x] = [k20 if value == x else 0 for value in X[:, 13]]
+
+
 colsCount2 = 7
 X2 = np.empty((memSize, colsCount2), dtype=int)
 X2[:, 0] = genderY
@@ -91,11 +103,29 @@ C = len(ageLabels)
 
 # isMale, isFemale, avgAge, cityA, cityB, cityC, stayInY, martialSstatus, purchase 
 XforPCA = X[:, [2, 3, 4, 6, 7, 8, 9, 10, 14]]
-
 # avgAge, stayInY, isMale, isFemale, martialStatus, Purchase
 smallPca = X[:, [4, 9, 2, 3, 10, 14]]
+linearRegressionData = X[:, [4, 9, 2, 3, 10, 6, 7, 8]]
+categories = np.concatenate((Category_1, Category_2, Category_3), axis=1)
+purchase = [[x] for x in X[:, 14]]
+linearRegressionData = np.concatenate((linearRegressionData, Occupation, categories, purchase), axis=1)
 
-pcaNames = ['avgAge', 'stayInY',  'isMale', 'isFemale', 'martialStatus','Purchase' ]
+chosenIndices = [i for i, x in enumerate(linearRegressionData.mean(axis=0)) if x > 0]
+
+linearRegressionData = linearRegressionData[:, chosenIndices]
+a = (linearRegressionData - np.ones((N,1))*linearRegressionData.mean(axis=0))
+b = (np.ones((N,1))*linearRegressionData.std(axis=0))
+normalizedRegressionData = a/ b
+
+## FOR CLASIFICATION
+normalizedX = normalizedRegressionData[:, list(range(len(normalizedRegressionData[0]) - 1))]
+normalizedY = normalizedRegressionData[:, -1].squeeze()
+normalizedMartialStatus = normalizedX[:, 5]
+normalizedX[:, 5] = normalizedY
+normalizedY = normalizedMartialStatus
+
+normalizedData = (smallPca - np.ones((N,1))*smallPca.mean(axis=0)) / (np.ones((N,1))*smallPca.std(axis=0))
+pcaNames = ['avgAge', 'stayInY', 'isMale', 'isFemale', 'martialStatus','Purchase' ]
 mat = ratioDf.corr()
 
 
