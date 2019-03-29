@@ -10,7 +10,7 @@ from data import normalizedX, normalizedY
 X = normalizedX
 y = [1 if x > 0 else 0 for x in normalizedY]
 y = np.array(y)
-N = 5
+N = 10
 
 # Maximum number of neighbors
 L = 10

@@ -28,12 +28,12 @@ for train, test in kfold.split(X):
 	print('train: %s, test: %s' % (X[train], X[test]))
 
 
-# plt.scatter(y_test, predictions)
-# plt.xlabel("True Values")
-# plt.ylabel("Predictions")
-# plt.show()
-#
-# print("Score:", model.score(X_test, y_test))
+plt.scatter(y_test, predictions)
+plt.xlabel("True Values")
+plt.ylabel("Predictions")
+plt.show()
+
+print("Score:", model.score(X_test, y_test))
 
 
 # feature extraction
