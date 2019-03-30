@@ -14,7 +14,7 @@ K = 10
 CV = model_selection.KFold(n_splits=K,shuffle=True)
 
 # Initialize variables
-lambdaRange = np.arange(0, 5, 0.2)
+lambdaRange = np.arange(0, 2, 0.1)
 # lambdaRange = np.log([-3, -2, -1, 0, 1, 2, 3])
 Error_train = np.empty((len(lambdaRange), K))
 Error_test = np.empty((len(lambdaRange), K))
@@ -31,7 +31,6 @@ for train_index, test_index in CV.split(X):
     X_poly_train = polynomial_features.fit_transform(X_train)
     X_poly_test = polynomial_features.fit_transform(X_test)
 
-
     for i, t in enumerate(lambdaRange):
         model = Ridge(alpha=t)
         model.fit(X_poly_train, y_train)
@@ -43,6 +42,8 @@ for train_index, test_index in CV.split(X):
 
     k += 1
 
+err, bestLambda = sorted(list(zip(Error_test.mean(1), lambdaRange)))[0]
+print('Best lambda for model {0}'.format(round(bestLambda, 2)))
 f = figure()
 plot(lambdaRange, Error_train.mean(1))
 plot(lambdaRange, Error_test.mean(1))
@@ -50,4 +51,6 @@ xlabel('lambda')
 ylabel('error'.format(K))
 legend(['Error_train', 'Error_test'])
 show()
+
+regressionModel = Ridge(bestLambda)
 
