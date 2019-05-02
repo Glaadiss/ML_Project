@@ -21,6 +21,8 @@ x, y = get_x_and_y('adiposity')
 
 x2, y2 = get_x_and_y('chd', yNominal=True)
 
+origX = df_norm.loc[:, :]
+
 
 # Plot the residuals after fitting a linear model
 # sns.residplot(x, y, lowess=True, color="g")
