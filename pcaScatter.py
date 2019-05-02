@@ -44,13 +44,16 @@ ax.grid(color='white', linestyle='solid')
 
 ax.set_title("Scatter Plot (with tooltips!)", size=20)
 
+show()
+
 def printData(data):
     return ', '.join(pcaNames[x] + ':' + str(round(data[x], 2))  for x in range(6)) 
 
 labels = [printData(Y[i]) for i in range(len(Z))]
 
 
-tooltip = mpld3.plugins.PointLabelTooltip(scatter, labels=labels)
-mpld3.plugins.connect(fig, tooltip)
 
-mpld3.show()
+# tooltip = mpld3.plugins.PointLabelTooltip(scatter, labels=labels)
+# mpld3.plugins.connect(fig, tooltip)
+#
+# mpld3.show()
